@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This Is Me - Lyam Malinge</title>
+    <style>
+        :root {
+            --bg-dark: #0b1120;
+            --bg-card: #1e293b;
+            --primary: #38bdf8;
+            --secondary: #818cf8;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Cache les boutons radio qui contrôlent les écrans */
+        input[type="radio"] {
+            display: none;
+        }
+
+        nav {
+            background: rgba(11, 17, 32, 0.95);
+            border-bottom: 1px solid #1e293b;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-label {
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+        }
+
+        /* Gestion des écrans en CSS pur */
+        .screen {
+            display: none;
+            flex: 1;
+            padding: 40px 5%;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #tab-home:checked ~ .screen-home,
+        #tab-about:checked ~ .screen-about,
+        #tab-q1:checked ~ .screen-q1,
+        #tab-q2:checked ~ .screen-q2,
+        #tab-q3:checked ~ .screen-q3,
+        #tab-q4:checked ~ .screen-q4,
+        #tab-q5:checked ~ .screen-q5,
+        #tab-q6:checked ~ .screen-q6,
+        #tab-q7:checked ~ .screen-q7,
+        #tab-q8:checked ~ .screen-q8,
+        #tab-end:checked ~ .screen-end {
+            display: flex;
+        }
+
+        #tab-home:checked ~ nav label[for="tab-home"],
+        #tab-about:checked ~ nav label[for="tab-about"],
+        #tab-q1:checked ~ nav label[for="tab-q1"] {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--primary);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        /* Accueil */
+        .hero {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #0b1120;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: var(--bg-card);
+            color: var(--text-main);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            border: 1px solid #475569;
+            cursor: pointer;
+        }
+
+        /* Présentation */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid #334155;
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Quiz CSS Pur */
+        .quiz-card {
+            background: var(--bg-card);
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #334155;
+        }
+
+        .q-header {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .quiz-card h2 {
+            font-size: 1.35rem;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .opt-label {
+            display: block;
+            background: #334155;
+            color: var(--text-main);
+            border: 2px solid #475569;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .feedback-msg {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .next-wrap {
+            display: none;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        /* Règles de validation pour chaque question */
+        .q-box input[value="correct"]:checked ~ .options label[data-correct="true"] {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: var(--accent);
+            color: #6ee7b7;
+        }
+
+        .q-box input[value="wrong"]:checked ~ .options label[data-correct="true"] {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: var(--accent);
+            color: #6ee7b7;
+        }
+
+        .q-box input[value="wrong1"]:checked ~ .options label[data-w="1"],
+        .q-box input[value="wrong2"]:checked ~ .options label[data-w="2"],
+        .q-box input[value="wrong3"]:checked ~ .options label[data-w="3"] {
+            background: rgba(239, 68, 68, 0.25);
+            border-color: var(--danger);
+            color: #fca5a5;
+        }
+
+        .q-box input[value="correct"]:checked ~ .msg-ok {
+            display: block;
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+        }
+
+        .q-box input[value="wrong1"]:checked ~ .msg-no,
+        .q-box input[value="wrong2"]:checked ~ .msg-no,
+        .q-box input[value="wrong3"]:checked ~ .msg-no {
+            display: block;
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+
+        .q-box input:checked ~ .next-wrap {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #1e293b;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contrôleurs d'écrans invisibles -->
+    <input type="radio" name="page" id="tab-home" checked>
+    <input type="radio" name="page" id="tab-about">
+    <input type="radio" name="page" id="tab-q1">
+    <input type="radio" name="page" id="tab-q2">
+    <input type="radio" name="page" id="tab-q3">
+    <input type="radio" name="page" id="tab-q4">
+    <input type="radio" name="page" id="tab-q5">
+    <input type="radio" name="page" id="tab-q6">
+    <input type="radio" name="page" id="tab-q7">
+    <input type="radio" name="page" id="tab-q8">
+    <input type="radio" name="page" id="tab-end">
+
+    <nav>
+        <label for="tab-home" class="logo">LYAM.DEV</label>
+        <div class="nav-buttons">
+            <label for="tab-home" class="nav-label">Home</label>
+            <label for="tab-about" class="nav-label">Presentation</label>
+            <label for="tab-q1" class="nav-label">Quiz 🎯</label>
+        </div>
+    </nav>
+
+    <!-- ÉCRAN 1 : ACCUEIL -->
+    <div class="screen screen-home">
+        <div class="hero">
+            <span class="badge">English Presentation • 13 Years Old</span>
+            <h1>Hi, I'm Lyam Malinge 👋</h1>
+            <p>Welcome to my personal website! Discover who I am, my passion for badminton, technology, video games, and test your knowledge with my interactive quiz.</p>
+            <div class="hero-buttons">
+                <label for="tab-q1" class="btn-primary">Start the Quiz 🎯</label>
+                <label for="tab-about" class="btn-secondary">Read Presentation 📖</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉCRAN 2 : PRÉSENTATION -->
+    <div class="screen screen-about">
+        <h2 style="text-align:center; margin-bottom:25px; font-size:1.8rem;">About <span style="color:var(--primary);">Lyam Malinge</span></h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🎂 Identity & Family</h3>
